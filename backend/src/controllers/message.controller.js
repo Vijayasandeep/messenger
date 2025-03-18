@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User from '../models/user.model.js';
 export const getUsers = async (req, res) => {
     try {
         const loggedInUser = req.user._id;
@@ -30,11 +30,11 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
     try {
-        const {id:receiverId} = req.params;
-        const{text,image}   = req.body;
+        const { id: receiverId } = req.params;
+        const { text, image } = req.body;
         const sender = req.user._id;
         let imageUrl;
-        if(image){
+        if (image) {
             const uploadResponse = cloudinary.uploader.upload(image);
             imageUrl = uploadResponse.url;
         }
@@ -48,10 +48,10 @@ export const sendMessage = async (req, res) => {
         res.status(200).json(newMessage);
 
         //todo implement socket io here
-        
+
     } catch (error) {
         console.log("Error in sendMessage", error);
         res.status(500).json({ message: "Server Error" });
-        
+
     }
 };

@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../lib/utils.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
   console.log(req.body);
@@ -13,7 +14,7 @@ export const signup = async (req, res) => {
     if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    if (password.lenght < 6) {
+    if (password.length < 6) {
       return res.status(400).json({ message: "Password must be at least 6 characters long" });
     }
     const user = await User.findOne({ email });
@@ -33,7 +34,7 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log("Error in signup", error);
-    res.status(500).json({ message: "internal servor error" });
+    res.status(500).json({ message: "internal server error" });
   }
   // res.send("Signup Route");
 };
